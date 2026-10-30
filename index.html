@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessera — The visual memory for creative teams</title>
+<meta name="description" content="Tessera keeps every frame your team has ever made in one searchable place. Describe what you remember, get the file.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-1%20-4%2027%2027%22%3E%3Cstyle%3Erect%7Bfill%3A%23141414%7D%40media%20(prefers-color-scheme%3Adark)%7Brect%7Bfill%3A%23fff%7D%7D%3C%2Fstyle%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%229%22%20height%3D%229%22%20rx%3D%221.6%22%2F%3E%3Crect%20x%3D%2214.5%22%20y%3D%22-1.5%22%20width%3D%229%22%20height%3D%229%22%20rx%3D%221.6%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%2212%22%20width%3D%229%22%20height%3D%229%22%20rx%3D%221.6%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%229%22%20height%3D%229%22%20rx%3D%221.6%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Tessera — The visual memory for creative teams">
+<meta property="og:description" content="Every frame your team has ever made, findable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://picsum.photos">
+<link rel="preconnect" href="https://fastly.picsum.photos" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+
+<!-- ===== nav ===== -->
+<header class="nav" id="nav">
+  <a class="seg logo" href="#top" aria-label="Tessera, back to top" data-cursor-link><svg class="lmark" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="9" height="9" rx="1.6"/><rect class="t2" x="12" y="1" width="9" height="9" rx="1.6"/><rect x="1" y="12" width="9" height="9" rx="1.6"/><rect x="12" y="12" width="9" height="9" rx="1.6"/></svg><span class="wm">tessera</span></a>
+  <div class="seg now" aria-hidden="true">
+    <i class="pulse"></i>
+    <span class="roll"><span id="navName">Collections</span></span>
+    <span class="dial" id="dial"><i></i><b id="navIdx">01</b></span>
+  </div>
+  <span class="spacer"></span>
+  <button class="seg menubtn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-cursor-link><span class="mlbl"><span id="menuLabel">Menu</span></span><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
+  <a class="seg cta" href="#pricing" data-cursor-link><span>Start free</span><span class="knob" aria-hidden="true"><i class="kph"></i><svg viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+</header>
+
+<nav class="menu" id="menu" aria-label="Site" hidden>
+  <ol>
+    <li><a href="#top" style="--i:0" data-img="65"><small>01</small>Collections</a></li>
+    <li><a href="#search" style="--i:1" data-img="399"><small>02</small>Browse</a></li>
+    <li><a href="#features" style="--i:2" data-img="943"><small>03</small>System</a></li>
+    <li><a href="#how" style="--i:3" data-img="546"><small>04</small>Workflow</a></li>
+    <li><a href="#field" style="--i:4" data-img="325"><small>05</small>Field notes</a></li>
+    <li><a href="#pricing" style="--i:5" data-img="322"><small>06</small>Pricing</a></li>
+  </ol>
+  <div class="preview" id="preview" aria-hidden="true"></div>
+  <div class="mfoot label"><span>Tessera_2026 · Rotterdam</span><span>hello@tessera.app</span></div>
+</nav>
+
+<main>
+<!-- ===== 01 hero: the ring ===== -->
+<section class="hero" id="top" data-name="Collections">
+  <span class="anchor" id="search" aria-hidden="true"></span>
+  <div class="stage" id="stage">
+    <div class="ring" id="ring" aria-hidden="true"></div>
+    <div class="hub" id="hub">
+      <h1 style="--d:0">Every frame your team has ever made, findable.</h1>
+      <a class="hint" href="#search" style="--d:1" data-cursor-link>Scroll to explore</a>
+    </div>
+    <p class="cap" id="cap" aria-hidden="true"><span>Pulled from the archive in 0.4s</span><b id="capName"></b></p>
+    <div class="scap" id="scap" aria-live="polite"></div>
+    <div class="sbar" id="sbar">
+      <div class="fan sfan" id="sfan" aria-hidden="true"><img decoding="async" alt=""><img decoding="async" alt=""><img decoding="async" alt=""></div>
+      <button type="button" class="sgrid" id="sgrid" aria-label="Back to the front of the stack"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="1" width="5" height="5"/><rect x="10" y="1" width="5" height="5"/><rect x="1" y="10" width="5" height="5"/><rect x="10" y="10" width="5" height="5"/></svg></button>
+      <div class="spills" id="spills" role="group" aria-label="Filter the archive"></div>
+    </div>
+  </div>
+</section>
+
+<section class="partners" id="partners" aria-label="Studios that archive with Tessera">
+  <span class="corner tl">In the archive</span>
+  <h2 class="title split" data-split>Four hundred studios, <em>one archive.</em></h2>
+  <ul class="studios">
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/65/480/300.webp" alt="" loading="lazy"><b>Northbound</b><span>90,412 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/322/480/300.webp" alt="" loading="lazy"><b>Studio Aker</b><span>31,870 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/896/480/300.webp" alt="" loading="lazy"><b>Halcyon</b><span>58,204 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/388/480/300.webp" alt="" loading="lazy"><b>Fieldhouse</b><span>12,655 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/815/480/300.webp" alt="" loading="lazy"><b>Mirrorball</b><span>47,019 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/546/480/300.webp" alt="" loading="lazy"><b>Ovid &amp; Co.</b><span>22,480 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/943/480/300.webp" alt="" loading="lazy"><b>Pacer</b><span>9,306 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/551/480/300.webp" alt="" loading="lazy"><b>Lantern Works</b><span>64,772 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/325/480/300.webp" alt="" loading="lazy"><b>Kintsugi</b><span>27,593 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/390/480/300.webp" alt="" loading="lazy"><b>Vesper</b><span>15,828 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/859/480/300.webp" alt="" loading="lazy"><b>Salt &amp; Silver</b><span>36,077 frames</span></li>
+    <li class="sc"><img decoding="async" src="https://picsum.photos/id/1016/480/300.webp" alt="" loading="lazy"><b>Été</b><span>11,210 frames</span></li>
+  </ul>
+</section>
+
+<!-- ===== 03 system ===== -->
+<section class="features" id="features" data-name="System">
+  <span class="corner tl">03 — System</span>
+  <h2 class="title split" data-split>One frame, <em>through the whole pipeline.</em></h2>
+  <div class="sys" id="sys" role="group" aria-label="Capabilities"></div>
+  <div class="sysd" id="sysd" aria-live="polite"><h3 id="sysH"></h3><p id="sysP"></p></div>
+</section>
+
+<!-- ===== 04 workflow ===== -->
+<section class="how" id="how" data-name="Workflow">
+  <span class="corner tl">04 — Workflow</span>
+  <span class="corner tr">Three steps</span>
+  <div class="wrap">
+    <h2 class="title split" data-split style="max-width:14ch">Three steps, then <em>it runs itself.</em></h2>
+    <div class="howgrid">
+      <div class="steps" id="steps">
+        <article class="step" data-step="0">
+          <span class="k">Step 01</span>
+          <h3>Point it at <em>the mess.</em></h3>
+          <p>Connect Dropbox, Drive, S3 or the NAS in the corner. Tessera indexes in place — nothing moves until you say so.</p>
+          <img decoding="async" class="inline" src="https://picsum.photos/id/428/560/420.webp" alt="" loading="lazy">
+        </article>
+        <article class="step" data-step="1">
+          <span class="k">Step 02</span>
+          <h3>Let it read <em>everything.</em></h3>
+          <p>Subjects, scenes, colour, faces you hold releases for, and the words baked into layouts. Duplicates collapse on their own.</p>
+          <img decoding="async" class="inline" src="https://picsum.photos/id/546/560/420.webp" alt="" loading="lazy">
+        </article>
+        <article class="step" data-step="2">
+          <span class="k">Step 03</span>
+          <h3>Search instead <em>of asking.</em></h3>
+          <p>The question that used to be a message to the producer is now a sentence in a search field — answered in under a second.</p>
+          <img decoding="async" class="inline" src="https://picsum.photos/id/390/560/420.webp" alt="" loading="lazy">
+        </article>
+      </div>
+      <div class="media" aria-hidden="true">
+        <div class="sticky" id="how-sticky">
+          <span class="hprog"><i></i></span>
+          <figure class="m on"><img decoding="async" src="https://picsum.photos/id/428/760/930.webp" alt="" loading="lazy"></figure>
+          <figure class="m"><img decoding="async" src="https://picsum.photos/id/546/760/930.webp" alt="" loading="lazy"></figure>
+          <figure class="m"><img decoding="async" src="https://picsum.photos/id/390/760/930.webp" alt="" loading="lazy"></figure>
+          <span class="bignum" id="bignum"><span>01</span><span>02</span><span>03</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 field notes ===== -->
+<section class="field" id="field" data-name="Field notes">
+  <span class="corner tl">05 — Field notes</span>
+  <span class="corner tr">Drag the rail →</span>
+  <div class="wrap rhead">
+    <h2 class="title split" data-split>Heard <em>from the field.</em></h2>
+    <div class="ctrl">
+      <span class="count"><b id="rIdx">01</b><span class="trk"><i id="rBar"></i></span><span id="rTot">06</span></span>
+      <button class="arrow" id="rPrev" aria-label="Previous">←</button>
+      <button class="arrow" id="rNext" aria-label="Next">→</button>
+    </div>
+  </div>
+
+  <div class="rail" id="rail" data-cursor="Drag">
+    <article class="qcard">
+      <span class="co">Northbound</span>
+      <blockquote>“We shot 90,000 frames last year. The ones we reused used to be <em>whichever ones someone happened to remember.</em>”</blockquote>
+      <footer><img decoding="async" src="https://picsum.photos/id/64/120/120.webp" alt=""><div><b>Ines Calder</b><span>Head of Content</span></div></footer>
+    </article>
+    <figure class="pcard" style="margin:0"><img decoding="async" src="https://picsum.photos/id/325/540/756.webp" alt="Northbound SS26 campaign frame"><span>Northbound · SS26</span></figure>
+    <article class="qcard">
+      <span class="co">Studio Aker</span>
+      <blockquote>“Licence dates used to live in a spreadsheet nobody opened. Now the image tells us <em>before it ships.</em>”</blockquote>
+      <footer><img decoding="async" src="https://picsum.photos/id/778/120/120.webp" alt=""><div><b>Jonas Aker</b><span>Founder &amp; Photographer</span></div></footer>
+    </article>
+    <article class="qcard">
+      <span class="co">Halcyon</span>
+      <blockquote>“Our producers stopped being librarians. <em>That alone paid for it</em> in the first month.”</blockquote>
+      <footer><img decoding="async" src="https://picsum.photos/id/646/120/120.webp" alt=""><div><b>Maya Okafor</b><span>Executive Producer</span></div></footer>
+    </article>
+    <figure class="pcard" style="margin:0"><img decoding="async" src="https://picsum.photos/id/322/540/756.webp" alt="Halcyon location scout frame"><span>Halcyon · Rome scout</span></figure>
+    <article class="qcard">
+      <span class="co">Fieldhouse</span>
+      <blockquote>“I typed <em>‘that orange flower from spring’</em> and it was the first result. I laughed out loud.”</blockquote>
+      <footer><img decoding="async" src="https://picsum.photos/id/65/120/120.webp" alt=""><div><b>Leo Brandt</b><span>Art Director</span></div></footer>
+    </article>
+  </div>
+
+  <p class="said rv">Teams reuse <span class="ip" style="--i:0"><img decoding="async" src="https://picsum.photos/id/896/160/80.webp" alt="" loading="lazy"></span><b data-count="14" data-suffix="×">14×</b> more of the work they already own, give every producer back <span class="ip" style="--i:1"><img decoding="async" src="https://picsum.photos/id/388/160/80.webp" alt="" loading="lazy"></span><b data-count="6" data-suffix=" hours">6 hours</b> a week, and have shipped <span class="ip" style="--i:2"><img decoding="async" src="https://picsum.photos/id/65/160/80.webp" alt="" loading="lazy"></span><b data-count="0">0</b> expired licences.</p>
+</section>
+
+<!-- ===== 06 pricing ===== -->
+<section class="pricing" id="pricing" data-name="Pricing">
+  <span class="corner tl">06 — Pricing</span>
+  <div class="wrap">
+    <h2 class="title split" data-split>Priced per seat, <em>not per gigabyte.</em></h2>
+    <p class="psub">Every seat comes with <b>5 TB</b> of archive and unlimited search.<span class="info" title="Storage is pooled across the team, so one heavy shooter never runs out." aria-label="Storage is pooled across the team">i</span></p>
+    <div class="pwrap">
+      <span class="ptiles" aria-hidden="true"></span>
+      <div class="pbox">
+        <span class="pplan" id="pplan">Studio · 8 × $24</span>
+        <div class="price" aria-hidden="true"><span class="cur">$</span><span class="odo" id="odo"></span><span class="per" id="per">/ month</span></div>
+        <span class="sr" id="priceSr" aria-live="polite"></span>
+      </div>
+    </div>
+    <p class="pline"><b>This price grows with your team.</b> No storage surprises, just seats.</p>
+    <p class="pline">Use the slider to preview your monthly cost. Past 40 seats, <a href="#finale">custom pricing</a> is available.</p>
+    <div class="ruler" id="ruler">
+      <span class="rbub" id="rbub">8 seats</span>
+      <span class="rticks" aria-hidden="true"></span><span class="rticks ink" aria-hidden="true"></span>
+      <span class="rthumb" aria-hidden="true"></span>
+      <input type="range" id="seats" min="1" max="40" value="8" aria-label="Seats">
+    </div>
+    <div class="rends" aria-hidden="true"><span>1 seat</span><span>40 seats</span></div>
+    <div class="prow">
+      <div class="cycle" id="cycle" role="group" aria-label="Billing period">
+        <span class="blob" aria-hidden="true"></span>
+        <button data-cycle="mo" aria-pressed="true">Monthly</button>
+        <button data-cycle="yr" aria-pressed="false">Yearly · save 20%</button>
+      </div>
+      <a class="btn btn-dark" id="calcCta" href="#finale" data-cursor-link>Start a 14-day trial <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 finale ===== -->
+<section class="finale" id="finale" data-name="Join">
+  <span class="corner tl">07 — Join</span>
+  <span class="corner tr">First terabyte free</span>
+  <p class="label muted">Join the archive</p>
+  <h2 class="split" data-split>Let’s <em>find it.</em></h2>
+  <div class="arc" id="arc" aria-hidden="true">
+    <figure style="--n:-3"><img decoding="async" src="https://picsum.photos/id/896/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:-2"><img decoding="async" src="https://picsum.photos/id/859/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:-1"><img decoding="async" src="https://picsum.photos/id/325/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:0"><img decoding="async" src="https://picsum.photos/id/65/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:1"><img decoding="async" src="https://picsum.photos/id/399/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:2"><img decoding="async" src="https://picsum.photos/id/322/420/520.webp" alt="" loading="lazy"></figure>
+    <figure style="--n:3"><img decoding="async" src="https://picsum.photos/id/390/420/520.webp" alt="" loading="lazy"></figure>
+  </div>
+  <form class="signup" id="signup">
+    <label class="sr" for="email">Work email</label>
+    <input id="email" type="email" name="email" placeholder="Work email" required>
+    <button class="btn btn-dark" type="submit">Get access</button>
+  </form>
+  <p class="small">Your first terabyte is free. No card needed.</p>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <p class="label muted" style="max-width:26ch;line-height:1.7">The visual memory for creative teams. Made in Rotterdam.</p>
+      <div class="cols">
+        <div><h4 class="label">Product</h4><ul><li><a href="#search">Search</a></li><li><a href="#features">System</a></li><li><a href="#how">Workflow</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+        <div><h4 class="label">Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Changelog</a></li><li><a href="#">Press kit</a></li></ul></div>
+        <div><h4 class="label">Resources</h4><ul><li><a href="#">Docs</a></li><li><a href="#">API</a></li><li><a href="#">Migration</a></li><li><a href="#">Status</a></li></ul></div>
+      </div>
+    </div>
+    <div class="wm-wrap"><div class="wordmark" id="wordmark" aria-hidden="true"></div></div>
+    <div class="fine"><span>© 2026 Tessera B.V.</span><span>Privacy · Terms · Demo imagery via Picsum</span></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

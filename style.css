@@ -1,0 +1,487 @@
+/* ======================================================================
+   One world, taken from the collections ring: a warm off-white gallery
+   wall, soft-shadowed prints, serif poster titles, and wall labels in
+   the corners of every section.
+   ====================================================================== */
+:root{
+  --paper:#ffffff; --panel:#ffffff; --ink:#141414; --soft:#141414;
+  --muted:#8a8a8a; --line:rgba(0,0,0,.08);
+  --butter:#f6df86; --sky:#a9dcf3; --mint:#c3ebcf; --pink:#141414; --peri:#b9c3f7; --amber:#e9a23b;
+  --shadow:0 16px 36px rgba(0,0,0,.12);
+  --shadow-lg:0 28px 60px rgba(0,0,0,.14);
+  --pad:clamp(18px,4.5vw,56px);
+  --maxw:1280px;
+  --hgap:clamp(56px,9vh,96px);
+  --ease:cubic-bezier(.22,.8,.3,1);
+  --spring:cubic-bezier(.34,1.4,.5,1);
+  --serif:"Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.lock{overflow:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter Tight",system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:400;letter-spacing:-.025em;line-height:1.02}
+h1 em,h2 em,h3 em{font-style:italic}
+p{margin:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* wall labels — the corner voice of the hero, reused on every section */
+.label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.label.muted{color:var(--muted)}
+.corner{position:absolute;z-index:6;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;pointer-events:none}
+.corner.tl{top:30px;left:var(--pad)} .corner.tr{top:30px;right:var(--pad);text-align:right}
+.corner.bl{bottom:30px;left:var(--pad)} .corner.br{bottom:30px;right:var(--pad);text-align:right}
+.title{font-size:clamp(38px,5.6vw,80px);font-weight:300;letter-spacing:-.035em}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.6em;border-radius:999px;
+  font-size:14px;font-weight:500;padding:.95em 1.5em;white-space:nowrap;
+  transition:transform .35s var(--spring),box-shadow .35s var(--ease),background .35s,color .35s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-dark{background:var(--soft);color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.btn-dark:hover{background:var(--ink)}
+.btn-line{box-shadow:inset 0 0 0 1px var(--line);background:var(--paper)}
+.btn-line:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.split .w>span{display:inline-block;transform:translateY(105%);transition:transform .9s var(--ease);transition-delay:calc(var(--i) * 45ms)}
+.split.in .w>span{transform:none}
+
+/* ======================================================================
+   NAV — segmented pills. The centre one knows where you are.
+   ====================================================================== */
+.nav{position:fixed;top:14px;left:0;right:0;z-index:90;display:flex;align-items:center;gap:8px;padding:0 clamp(12px,2.4vw,24px);pointer-events:none}
+.seg{
+  pointer-events:auto;display:flex;align-items:center;gap:10px;height:44px;padding:0 16px;border-radius:999px;
+  background:rgba(255,255,255,.78);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.08);
+  font-size:13.5px;font-weight:500;transition:transform .35s var(--spring),background .35s,color .35s;
+}
+/* the logo sits bare on the page, no capsule */
+.seg.logo{gap:10px;padding:0 4px;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* the mark: four mosaic tiles with one lifted out, the frame you went looking
+   for. Hover sets it back in its place */
+.lmark{width:21px;height:21px;flex:none;overflow:visible;fill:currentColor}
+.lmark .t2{transform:translate(2.5px,-2.5px);transition:transform .9s var(--ease)}
+.seg.logo:hover .lmark .t2{transform:none}
+/* the wordmark, set in the hero's serif */
+.wm{font-family:var(--serif);font-size:24px;font-weight:400;line-height:1;letter-spacing:-.035em;translate:0 -1px}
+.seg.now{position:absolute;left:50%;translate:-50% 0;gap:12px;padding:0 8px 0 16px}
+.seg.now .pulse{width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 0 rgba(226,95,185,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(226,95,185,0)}100%{box-shadow:0 0 0 0 rgba(226,95,185,0)}}
+.roll{display:block;overflow:hidden;height:1.4em;min-width:92px}
+.roll span{display:block;line-height:1.4}
+.roll span.in{animation:nameIn .55s var(--ease)}
+@keyframes nameIn{from{transform:translateY(100%);opacity:0}}
+/* scroll progress as a tiny version of the hero ring: 24 ticks that fill
+   clockwise, with the section number in the middle */
+.dial{position:relative;width:30px;height:30px;flex:none;display:grid;place-items:center}
+.dial i{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(var(--ink) calc(var(--np,0) * 1turn),rgba(0,0,0,.16) 0);
+  -webkit-mask:repeating-conic-gradient(#000 0 6deg,transparent 6deg 15deg),radial-gradient(circle,transparent 0 9px,#000 9.5px 14.5px,transparent 15px);
+  -webkit-mask-composite:source-in;
+          mask:repeating-conic-gradient(#000 0 6deg,transparent 6deg 15deg),radial-gradient(circle,transparent 0 9px,#000 9.5px 14.5px,transparent 15px);
+          mask-composite:intersect}
+.dial b{font-size:9.5px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.dial b.in{animation:nameIn .55s var(--ease)}
+.spacer{flex:1}
+/* menu: a 3×3 grid of dots that folds into an × — the edge dots drop out
+   and what remains is a cross */
+.seg.menubtn{gap:12px;padding:0 16px 0 18px}
+.mlbl{display:block;overflow:hidden;height:1.4em}
+.mlbl span{display:block;line-height:1.4}
+.mlbl span.in{animation:nameIn .6s var(--ease)}
+.dots{display:grid;grid-template-columns:repeat(3,3px);gap:3px;transition:rotate .9s var(--ease)}
+.dots i{width:3px;height:3px;border-radius:50%;background:currentColor;transition:transform .6s var(--ease),opacity .6s var(--ease)}
+.seg.menubtn:hover .dots i:nth-child(odd){transform:scale(1.4)}
+.menu-open .dots{rotate:90deg}
+.menu-open .dots i:nth-child(2n){opacity:0;transform:scale(0)}
+/* main cta: an ink pill whose knob is a small window onto the archive — the
+   photo changes every few seconds, and on hover it floods the pill */
+.seg.cta{position:relative;overflow:hidden;isolation:isolate;gap:12px;padding:0 5px 0 18px;background:var(--ink);color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.knob{position:relative;width:34px;height:34px;display:grid;place-items:center;color:#fff}
+.kph{position:absolute;inset:0;z-index:-1;border-radius:50%;background:#333 center/cover no-repeat;transition:transform .9s var(--ease),background-image .9s var(--ease)}
+.kph::after{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(0,0,0,.3)}
+.seg.cta:hover .kph{transform:scale(8)}
+.knob svg{position:relative;width:12px;height:12px;transition:transform .6s var(--ease)}
+.seg.cta:hover .knob svg{transform:rotate(45deg)}
+@media (max-width:760px){ .seg.cta{display:none} .seg.now .roll,.seg.now .pulse{display:none} .seg.now{padding:0 7px} }
+
+/* full-screen menu */
+.menu{position:fixed;inset:0;z-index:85;background:var(--paper);clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease);display:grid;grid-template-columns:1.2fr 1fr;gap:40px;padding:110px var(--pad) 40px}
+.menu.open{clip-path:inset(0)}
+/* author display:grid beats the hidden attribute, so restate it — otherwise the closed menu stays in the tab order */
+.menu[hidden]{display:none}
+.menu ol{list-style:none;margin:0;padding:0;align-self:center}
+.menu li{overflow:hidden}
+.menu a{display:flex;align-items:baseline;gap:18px;padding:.08em 0;font-family:var(--serif);font-size:clamp(40px,6.4vw,92px);font-weight:300;letter-spacing:-.035em;line-height:1.05;transform:translateY(105%);transition:transform .9s var(--ease),color .35s,padding-left .6s var(--ease)}
+.menu.open a{transform:none;transition-delay:calc(.2s + var(--i) * 55ms)}
+.menu a small{font-family:"Inter Tight",sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.menu a:hover{padding-left:18px;font-style:italic}
+.menu .preview{align-self:center;position:relative;aspect-ratio:4/5;max-height:70vh;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-lg);opacity:0;transform:scale(.94);transition:opacity .6s var(--ease) .3s,transform .9s var(--ease) .3s}
+.menu.open .preview{opacity:1;transform:none}
+.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .6s var(--ease),transform .9s var(--ease)}
+.preview img.on{opacity:1;transform:none}
+.menu .mfoot{grid-column:1/-1;display:flex;justify-content:space-between;align-self:end;color:var(--muted)}
+@media (max-width:760px){ .menu{grid-template-columns:1fr} .menu .preview{display:none} }
+
+/* cursor companion — only for a real mouse */
+.cursor{position:fixed;left:0;top:0;z-index:100;pointer-events:none;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:999px;background:var(--ink);display:grid;place-items:center;opacity:0;transition:width .35s var(--spring),height .35s var(--spring),margin .35s var(--spring),background .35s,opacity .35s}
+.cursor span{font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);opacity:0;transition:opacity .35s;white-space:nowrap}
+.cursor.big{width:78px;height:78px;margin:-39px 0 0 -39px}
+.cursor.big span{opacity:1}
+.cursor.link{width:34px;height:34px;margin:-17px 0 0 -17px;background:rgba(0,0,0,.1)}
+@media (hover:none),(pointer:coarse){ .cursor{display:none} }
+
+/* ======================================================================
+   01 HERO — the ring
+   ====================================================================== */
+/* The hero is a scroll track: the stage pins while the ring swells into an
+   arch, turns, and hands off to the deck (after inkwell.tech, then taste). */
+.hero{position:relative;height:640svh;background:var(--paper)}
+.hero .anchor{position:absolute;left:0;top:42%;width:1px;height:1px}
+.stage{position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden}
+.ring{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* Plain 2D transforms and no will-change, so each print is redrawn at the
+   size it's shown. As a GPU layer it was rasterised mid-intro at a tiny
+   scale and then stretched — that was the blur. */
+.card{position:absolute;left:0;top:0}
+.card .in{width:100%;height:100%;border-radius:12px;overflow:hidden;background:#efece8;box-shadow:var(--shadow);transition:transform .9s var(--ease),box-shadow .9s var(--ease)}
+.card img{width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none;opacity:0;transition:opacity .6s var(--ease)}
+.card img.ld{opacity:1}
+.stage.ringmode .card{pointer-events:auto}
+/* hover: the print lifts and tilts toward the cursor, like picking a print
+   up off the table */
+.stage.ringmode .card.lift .in{transform:perspective(520px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));box-shadow:0 30px 60px rgba(0,0,0,.22);transition:transform .35s var(--ease),box-shadow .9s var(--ease)}
+.hub{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;width:min(440px,62vw)}
+.hub h1{font-size:clamp(20px,2.1vw,30px);font-weight:300;letter-spacing:-.02em;line-height:1.15}
+.hint{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hint:hover{color:var(--ink)}
+.hub>*{opacity:0;transform:translateY(12px);animation:hubIn 1.4s var(--ease) forwards;animation-delay:calc(1s + var(--d,0) * 160ms)}
+@keyframes hubIn{to{opacity:1;transform:none}}
+/* arch caption — the script walks it down under the final print */
+.cap{position:absolute;left:50%;top:56%;translate:-50% 0;z-index:2;text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;line-height:1.8;opacity:0;pointer-events:none}
+.cap span{display:block;color:var(--muted)}
+.cap b{display:block;font-weight:600}
+.cap b.in{animation:nameIn .8s var(--ease)}
+/* the hint names whatever print you point at; it keeps its own end state, or it
+   would drop back to the hidden one the hero intro starts from */
+.hint.in{opacity:1;transform:none;animation:nameIn .8s var(--ease)}
+@media (max-width:760px){ .hub{width:58vw} .hub h1{font-size:19px} }
+@media (prefers-reduced-motion:reduce){ .hero{height:100svh} }
+
+/* ======================================================================
+   02 BROWSE — the stack (after unveil.fr). Prints become planes in a 3D
+   stack that recedes up and to the right; scrolling moves you through it.
+   The front plane sits at depth 0 and the rest recede, so no photo is ever
+   magnified past its real size — they stay sharp.
+   ====================================================================== */
+.ring{perspective:1300px;perspective-origin:62% 34%}
+.stage.stack .card .in{border-radius:4px;box-shadow:0 30px 60px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.35);transition:transform .9s var(--ease),border-radius .9s var(--ease)}
+.stage.live .card{pointer-events:auto;cursor:pointer}
+/* hover pulls a plane up out of the stack, like a card from a file drawer */
+.stage.live .card:hover .in{transform:translateY(-28px)}
+/* the front plane gets viewfinder marks */
+.card.front .in::after{content:"";position:absolute;inset:16px;pointer-events:none;opacity:.9;
+  --plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 0v14M0 7h14' stroke='white' stroke-width='1.4'/%3E%3C/svg%3E");
+  background:var(--plus) 0 0/14px no-repeat,var(--plus) 100% 0/14px no-repeat,var(--plus) 0 100%/14px no-repeat,var(--plus) 100% 100%/14px no-repeat}
+/* caption for the front plane */
+.scap{position:absolute;right:max(24px,6vw);top:38%;z-index:5;opacity:0;pointer-events:none;text-align:right;display:grid;gap:6px;
+  font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.scap b{color:var(--ink);font-weight:600}
+.scap .nm{color:var(--ink);font-family:var(--serif);font-weight:300;font-size:clamp(20px,2vw,28px);letter-spacing:-.02em;text-transform:none}
+.scap.in{animation:nameIn .9s var(--ease)}
+/* the filters: plain small caps, like "Scroll to explore". A hairline slides
+   under the active one; hovering fans out three of its prints above it */
+.sbar{position:absolute;left:50%;bottom:28px;translate:-50% 0;z-index:5;display:flex;align-items:center;gap:26px;
+  opacity:0;pointer-events:none;max-width:calc(100% - 32px)}
+.stage.live .sbar{pointer-events:auto}
+.sgrid{flex:none;width:28px;height:28px;display:grid;place-items:center;color:var(--muted);transition:color .6s var(--ease)}
+.sgrid:hover{color:var(--ink)}
+.sgrid svg{width:14px;height:14px;overflow:visible}
+.sgrid rect{transform-box:fill-box;transform-origin:center;transition:transform .9s var(--ease)}
+.sgrid:hover rect:nth-child(1){transform:translate(-1.5px,-1.5px) rotate(-8deg)}
+.sgrid:hover rect:nth-child(2){transform:translate(1.5px,-1.5px) rotate(8deg)}
+.sgrid:hover rect:nth-child(3){transform:translate(-1.5px,1.5px) rotate(8deg)}
+.sgrid:hover rect:nth-child(4){transform:translate(1.5px,1.5px) rotate(-8deg)}
+.spills{position:relative;display:flex;gap:26px;padding:10px 0;overflow-x:auto;scrollbar-width:none}
+.spills::-webkit-scrollbar{display:none}
+.sthumb{position:absolute;left:0;bottom:6px;height:1px;width:0;background:var(--ink);pointer-events:none;
+  transition:transform .9s var(--ease),width .9s var(--ease)}
+.spill{flex:none;padding:4px 0;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;transition:color .6s var(--ease)}
+.spill sup{font-size:8px;margin-left:3px;vertical-align:.8em;letter-spacing:.04em}
+.spill:hover,.spill[aria-pressed="true"]{color:var(--ink)}
+/* a fan of three prints, the logo's gesture; used by the filters and the studios */
+.fan{position:absolute;width:0;height:0;pointer-events:none;z-index:6;--fw:44px;--fh:56px;--fx:26px}
+.fan img{position:absolute;bottom:0;left:calc(var(--fw) / -2);width:var(--fw);max-width:none;height:var(--fh);object-fit:cover;border-radius:4px;
+  box-shadow:0 12px 28px rgba(0,0,0,.18);opacity:0;transform:translateY(14px) scale(.6);transform-origin:50% 100%;
+  transition:transform .9s var(--ease),opacity .35s var(--ease)}
+.fan.on img{opacity:1}
+.fan.on img:nth-child(1){transform:translateX(calc(var(--fx) * -1)) rotate(-12deg)}
+.fan.on img:nth-child(2){transform:translateY(-6px);transition-delay:.05s}
+.fan.on img:nth-child(3){transform:translateX(var(--fx)) rotate(12deg);transition-delay:.1s}
+.sfan{bottom:calc(100% + 4px);left:0}
+@media (max-width:760px){
+  .scap{right:auto;left:50%;translate:-50% 0;top:84px;text-align:center}
+  .sbar{bottom:26px;gap:18px}
+  .spills{gap:20px;mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+  .sfan{display:none}
+}
+
+/* ---------- partners: a quiet grid of studio names on hairlines. Hover a
+   name and that studio's photograph rises into its cell ---------- */
+.partners{position:relative;padding:150px 0 110px}
+.partners .title{margin-bottom:var(--hgap)}
+.studios{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);width:calc(100% - 2 * var(--pad));max-width:calc(var(--maxw) - 2 * var(--pad));margin:0 auto;list-style:none;padding:0}
+.sc{position:relative;height:clamp(112px,15vh,150px);background:var(--paper);display:grid;place-content:center;gap:8px;text-align:center;overflow:hidden;cursor:default}
+.sc b{position:relative;z-index:1;font-family:var(--serif);font-weight:300;font-size:clamp(20px,1.9vw,27px);letter-spacing:-.02em;transition:color .6s var(--ease)}
+.sc span{position:relative;z-index:1;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .6s var(--ease)}
+.sc img{position:absolute;inset:8px;width:calc(100% - 16px);height:calc(100% - 16px);max-width:none;object-fit:cover;border-radius:8px;
+  clip-path:inset(100% 0 0 0 round 8px);transition:clip-path .9s var(--ease)}
+.sc:hover img{clip-path:inset(0 0 0 0 round 8px)}
+.sc:hover b,.sc:hover span{color:#fff}
+@media (max-width:760px){ .studios{grid-template-columns:repeat(2,1fr)} .sc{height:104px} }
+
+/* ======================================================================
+   03 SYSTEM — five photographs in a row; the capability in focus opens
+   wide and its words sit underneath. It moves on by itself, or on hover
+   ====================================================================== */
+.features{position:relative;padding:150px 0 130px}
+.features .title{margin-bottom:var(--hgap)}
+.sys{display:flex;gap:10px;height:min(50vh,540px);min-height:340px;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.sp{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;text-align:left;transition:flex 1.3s var(--ease)}
+.sp.on{flex:5}
+.sp .ph{flex:1;min-height:0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.sp img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.6s var(--ease)}
+.sp.on img{transform:none}
+.sp .lb{display:flex;align-items:center;gap:10px;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;transition:color .6s var(--ease)}
+.sp.on .lb,.sp:hover .lb{color:var(--ink)}
+.sp .lb i{flex:1;height:1px;background:var(--line);position:relative;overflow:hidden;opacity:0;transition:opacity .6s}
+.sp.on .lb i{opacity:1}
+.sp .lb i::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left}
+.sp.on .lb i::after{animation:sysfill 6.5s linear forwards}
+.sys.paused .sp.on .lb i::after{animation-play-state:paused}
+@keyframes sysfill{to{transform:scaleX(1)}}
+.sysd{max-width:var(--maxw);margin:40px auto 0;padding:0 var(--pad);display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,90px);align-items:start}
+.sysd h3{font-size:clamp(24px,2.6vw,38px);font-weight:300;letter-spacing:-.03em;line-height:1.12}
+.sysd h3 em{font-style:normal;color:var(--muted)}
+.sysd p{color:var(--muted);font-size:16px;max-width:42ch;padding-top:6px}
+.sysd.in>*{animation:nameIn .9s var(--ease) both}
+.sysd.in p{animation-delay:.08s}
+@media (max-width:760px){
+  .sys{gap:6px;height:min(52vh,440px);padding:0 16px}
+  .sp{gap:10px}
+  .sp .lb .nm,.sp .lb i{display:none}
+  .sp.on .lb .nm{display:inline}
+  .sysd{grid-template-columns:1fr;gap:10px;margin-top:26px;padding:0 16px}
+  .sysd p{font-size:14.5px}
+}
+
+/* ======================================================================
+   04 WORKFLOW — sticky media, scrolling steps
+   ====================================================================== */
+.how{position:relative;padding:130px 0 60px;background:var(--panel)}
+.howgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,90px);margin-top:var(--hgap)}
+.step{min-height:74vh;display:flex;flex-direction:column;justify-content:center;gap:16px;opacity:.28;transition:opacity .6s var(--ease)}
+.step.on{opacity:1}
+.step .k{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.step h3{font-size:clamp(32px,3.8vw,54px);font-weight:300;letter-spacing:-.03em}
+.step p{color:var(--muted);max-width:40ch;font-size:16.5px}
+.step .inline{display:none}
+.media{position:relative}
+.sticky{position:sticky;top:13vh;height:74vh}
+.m{position:absolute;inset:0;margin:0;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg);clip-path:inset(100% 0 0 0 round 18px);transition:clip-path .9s var(--ease)}
+.m.on{clip-path:inset(0 0 0 0 round 18px)}
+.m img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 1.6s var(--ease)}
+.m.on img{transform:none}
+.bignum{position:absolute;right:24px;bottom:16px;z-index:5;height:1em;overflow:hidden;font-family:var(--serif);font-weight:300;font-size:clamp(90px,12vw,190px);line-height:1;letter-spacing:-.05em;color:var(--paper);pointer-events:none}
+.bignum span{display:block;transition:transform .9s var(--ease);transform:translateY(calc(var(--s,0) * -100%))}
+.hprog{position:absolute;left:-26px;top:0;bottom:0;width:2px;background:var(--line);border-radius:2px}
+.hprog i{position:absolute;left:0;top:0;width:100%;height:calc(var(--hp,0) * 100%);background:var(--ink);border-radius:2px}
+@media (max-width:880px){
+  .howgrid{grid-template-columns:1fr} .media{display:none}
+  .step{min-height:auto;opacity:1;padding:34px 0;border-top:1px solid var(--line)}
+  .step .inline{display:block;border-radius:14px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow);margin-top:8px}
+}
+
+/* ======================================================================
+   05 FIELD NOTES — a draggable rail of prints and quotes
+   ====================================================================== */
+.field{position:relative;padding:130px 0 120px;overflow:hidden}
+.rhead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:var(--hgap)}
+.ctrl{display:flex;align-items:center;gap:16px}
+.count{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.count .trk{width:90px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.count .trk i{display:block;height:100%;width:var(--rp,25%);background:var(--ink);transition:width .35s var(--ease)}
+.arrow{width:46px;height:46px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;font-size:17px;transition:transform .35s var(--spring),background .35s,color .35s}
+.arrow:hover{background:var(--ink);color:var(--paper);transform:scale(1.06)}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px max(var(--pad),calc((100vw - var(--maxw)) / 2 + var(--pad))) 30px;scrollbar-width:none;cursor:grab;user-select:none}
+.rail::-webkit-scrollbar{display:none}
+.rail.dragging{scroll-snap-type:none;cursor:grabbing}
+.rail>*{scroll-snap-align:start;flex:none}
+.qcard{width:min(440px,82vw);min-height:460px;border-radius:18px;padding:30px;display:flex;flex-direction:column;justify-content:space-between;gap:30px;background:var(--bg,var(--panel));box-shadow:var(--shadow);transition:transform .6s var(--spring)}
+.qcard:hover{transform:translateY(-6px) rotate(-.6deg)}
+.qcard .co{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.65}
+.qcard blockquote{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(24px,2.3vw,31px);line-height:1.12;letter-spacing:-.02em}
+.qcard footer{display:flex;align-items:center;gap:12px;font-size:14px}
+.qcard footer img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.qcard footer span{display:block;font-size:13px;opacity:.65}
+.pcard{width:min(330px,70vw);min-height:460px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.pcard img{width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .9s var(--ease)}
+.pcard:hover img{transform:scale(1.05)}
+.pcard span{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);border-radius:8px;padding:7px 11px;font-size:12px;font-weight:500}
+/* the numbers, read as one sentence: figures in ink, the rest in grey, and a
+   small photo opening up beside each figure */
+.said{max-width:31ch;margin:var(--hgap) auto 0;padding:0 var(--pad);text-align:center;font-family:var(--serif);font-weight:300;
+  font-size:clamp(26px,3.3vw,46px);line-height:1.34;letter-spacing:-.025em;color:var(--muted)}
+.said b{font-weight:300;color:var(--ink);font-variant-numeric:tabular-nums}
+.said .ip{display:inline-block;width:0;height:.92em;margin:0 .06em;border-radius:999px;overflow:hidden;vertical-align:-.1em;
+  transition:width 1.3s var(--ease),margin 1.3s var(--ease);transition-delay:calc(.2s + var(--i) * .18s)}
+.said .ip img{width:2.2em;height:100%;max-width:none;object-fit:cover}
+.said.in .ip{width:2.2em;margin:0 .14em}
+@media (max-width:720px){ .stats{grid-template-columns:1fr} }
+
+/* ======================================================================
+   06 PRICING — one price in a card, set in rolling digits, with a faint
+   mosaic around it; a ruler underneath picks the seats
+   ====================================================================== */
+.pricing{position:relative;padding:150px 0 120px;background:var(--paper);text-align:center;overflow-x:clip}
+.psub{margin-top:18px;color:var(--muted);font-size:15px}
+.psub b{color:var(--ink);font-weight:600}
+.info{display:inline-grid;place-items:center;width:15px;height:15px;margin-left:6px;border-radius:4px;box-shadow:inset 0 0 0 1px currentColor;font-size:9.5px;font-weight:700;vertical-align:1px;cursor:help}
+.pwrap{position:relative;display:inline-block;margin-top:var(--hgap);padding:30px 36px}
+/* the tiles: a checker of tesserae fading out from behind the card */
+.ptiles{position:absolute;inset:-26px -70px;pointer-events:none;
+  background:conic-gradient(rgba(0,0,0,.07) 25%,transparent 0 50%,rgba(0,0,0,.07) 0 75%,transparent 0) 0 0/12px 12px;
+  -webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
+.pbox{position:relative;min-width:min(360px,78vw);padding:22px 40px 26px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px var(--line),0 18px 40px rgba(0,0,0,.08);display:grid;justify-items:center;gap:10px}
+.pplan{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.price{display:flex;align-items:flex-start;gap:6px;font-family:var(--serif);font-weight:300;letter-spacing:-.03em}
+.price .cur{font-size:clamp(24px,2.4vw,34px);margin-top:.35em}
+.odo{display:inline-flex;font-size:clamp(64px,7vw,100px);line-height:1.1;font-variant-numeric:tabular-nums lining-nums}
+.odo .d{display:block;height:1.1em;overflow:hidden}
+.odo .d>span{display:block;transform:translateY(calc(var(--n,0) * -1.1em));transition:transform 1.3s var(--ease);transition-delay:calc(var(--i) * .06s)}
+.odo .d i{display:block;height:1.1em;font-style:normal}
+.price .per{align-self:flex-end;margin-bottom:.9em;font-family:"Inter Tight",sans-serif;font-size:14px;letter-spacing:0;color:var(--muted);white-space:nowrap}
+.pline{margin-top:10px;font-size:15px;color:var(--muted)}
+.pwrap+.pline{margin-top:36px}
+.pline b{color:var(--ink);font-weight:600}
+.pline a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+/* the ruler: one tick per seat; ink up to the thumb, a bubble riding above */
+.ruler{position:relative;width:min(560px,100%);height:14px;margin:80px auto 0;--pct:18%}
+.rticks{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(0,0,0,.16) 1px,transparent 1px);background-size:calc((100% - 1px) / 39) 100%}
+.rticks.ink{background-image:linear-gradient(90deg,var(--ink) 1px,transparent 1px);clip-path:inset(0 calc(100% - var(--pct)) 0 0)}
+.rthumb{position:absolute;top:-6px;bottom:-6px;left:var(--pct);width:2px;margin-left:-1px;border-radius:2px;background:var(--ink)}
+.rbub{position:absolute;bottom:calc(100% + 18px);left:var(--pct);translate:-50% 0;padding:5px 12px;border-radius:999px;background:#fff;
+  box-shadow:inset 0 0 0 1px var(--ink);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none}
+.ruler input{position:absolute;left:0;top:-20px;width:100%;height:54px;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:none}
+.ruler input::-webkit-slider-thumb{-webkit-appearance:none;width:2px;height:56px}
+.ruler input::-moz-range-thumb{width:2px;height:56px;border:0}
+.ruler:has(input:focus-visible) .rbub{outline:2px solid var(--ink);outline-offset:3px}
+.rends{display:flex;justify-content:space-between;width:min(560px,100%);margin:16px auto 0;font-size:12px;color:var(--muted)}
+.prow{display:flex;justify-content:center;align-items:center;gap:30px;flex-wrap:wrap;margin-top:48px}
+.cycle{position:relative;display:inline-flex;gap:26px}
+.cycle button{padding:6px 0;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .6s var(--ease)}
+.cycle button[aria-pressed="true"]{color:var(--ink)}
+.cycle .blob{position:absolute;pointer-events:none;transition:left .9s var(--ease),width .9s var(--ease)}
+.cycle .blob::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink)}
+@media (max-width:760px){ .pwrap{padding:22px 18px} .pbox{padding:18px 22px 22px} .ruler,.rends{width:calc(100% - 20px)} }
+
+/* ======================================================================
+   07 FINALE — the arc
+   ====================================================================== */
+.finale{position:relative;overflow:hidden;text-align:center;padding:140px 0 110px}
+.finale h2{font-size:clamp(46px,7.4vw,110px);font-weight:300;letter-spacing:-.045em;margin-top:14px}
+.arc{position:relative;height:clamp(250px,31vw,420px);margin:var(--hgap) 0 36px}
+.arc figure{position:absolute;left:50%;top:40%;margin:0;width:clamp(130px,17vw,250px);aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#eee;box-shadow:var(--shadow);
+  --i:calc(var(--n) + var(--roll,0));
+  transform:translate(-50%,-50%) translateX(calc(var(--i) * 108%)) translateY(calc(var(--i) * var(--i) * 17px)) rotate(calc(var(--i) * 4.2deg));will-change:transform}
+.arc img{width:100%;height:100%;object-fit:cover}
+.signup{display:flex;gap:6px;justify-content:center;max-width:460px;margin:0 auto;padding:6px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line),0 14px 40px rgba(0,0,0,.08);background:var(--paper)}
+.signup input{flex:1;min-width:0;font:inherit;font-size:15px;padding:.7em 1em;border:0;background:none;color:var(--ink);outline:none}
+.finale .small{margin-top:14px;font-size:13px;color:var(--muted)}
+.done{padding:.9em 1.2em;color:var(--muted)}
+@media (max-width:700px){ .arc{height:clamp(200px,52vw,280px)} .arc figure:nth-child(n+6){display:none} .finale{padding-top:110px} }
+
+/* ---------- footer ---------- */
+body>footer{padding:70px 0 30px;border-top:1px solid var(--line);overflow:hidden}
+.foot{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
+.foot .cols{display:flex;gap:clamp(30px,6vw,84px);flex-wrap:wrap}
+.foot h4{margin:0 0 14px;color:var(--muted)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px}
+.foot a{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .35s var(--ease)}
+.foot a:hover{background-size:100% 1px}
+.wordmark{font-weight:700;font-size:clamp(90px,24vw,360px);line-height:.8;letter-spacing:-.07em;margin-top:60px;display:flex;justify-content:center;white-space:nowrap}
+.wordmark span{display:inline-block;transform:translateY(100%);transition:transform 1.3s var(--ease);transition-delay:calc(var(--i) * 60ms)}
+.wordmark.in span{transform:none}
+.wordmark .it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.03em}
+.wm-wrap{overflow:hidden}
+.fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:26px;font-size:12.5px;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important}
+  html{scroll-behavior:auto}
+}
+
+/* ======================================================================
+   ONE THEME — every section speaks the hero's language: white paper,
+   photographs as the only colour, one light serif line per idea, and
+   small sans caps for everything else.
+   ====================================================================== */
+/* Lenis base styles */
+html.lenis,html.lenis body{height:auto}
+.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent]{overscroll-behavior:contain}
+
+/* one centred small-caps label per section instead of four corners */
+.corner.tr,.corner.bl,.corner.br{display:none}
+.corner.tl{left:50%;right:auto;translate:-50% 0;top:84px;font-size:10.5px;letter-spacing:.14em;color:var(--muted)}
+.title{font-size:clamp(26px,3.2vw,46px);font-weight:300;letter-spacing:-.025em;line-height:1.14;text-align:center;text-wrap:balance;margin-left:auto;margin-right:auto;max-width:20ch}
+.title em,.step h3 em,.finale h2 em,.qcard blockquote em{font-style:normal;color:var(--muted)}
+.fhead,.rhead{flex-direction:column;align-items:center;text-align:center;gap:18px}
+.fhead p{color:var(--muted);text-align:center;max-width:44ch;font-size:15px}
+.how,.field,.pricing{padding-top:150px}
+.how,.pricing{background:var(--paper)}
+
+/* system */
+.step .k,.qcard .co{font-size:10.5px;font-weight:600;letter-spacing:.14em}
+
+/* workflow */
+.step h3{font-size:clamp(24px,2.6vw,38px)}
+.m{box-shadow:var(--shadow)}
+.bignum{font-size:clamp(64px,7vw,110px)}
+
+/* field notes: white cards on hairlines, the photographs keep the colour */
+.qcard{background:#fff;border-radius:12px;box-shadow:inset 0 0 0 1px var(--line)}
+.qcard:hover{transform:translateY(-6px)}
+.qcard blockquote{font-size:clamp(20px,1.9vw,26px)}
+.pcard{border-radius:12px}
+
+
+/* finale */
+.finale{padding-top:150px}
+.finale h2{font-size:clamp(30px,4vw,56px);font-weight:300}
+.arc figure{border-radius:12px}
+.signup{border-radius:0;box-shadow:none;background:none;border-bottom:1px solid var(--line);padding:0 0 9px;max-width:420px}
+.signup:focus-within{border-color:var(--ink)}
+.signup input{padding:.4em 0;font-size:14px}
+
+/* menu overlay */
+.menu a{font-size:clamp(34px,5vw,72px)}
+.menu a small{font-size:10.5px;letter-spacing:.14em}
+.menu .preview{border-radius:12px}
+
+/* nav pills: white glass on white paper */
+.seg{background:rgba(255,255,255,.86);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07),0 8px 24px rgba(0,0,0,.06)}
+.btn-dark{background:var(--ink)}
